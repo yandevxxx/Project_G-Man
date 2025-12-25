@@ -43,7 +43,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Akun berhasil dibuat!');
+        return redirect()->route('dashboard')->with('success', 'Account successfully created!');
     }
 
     public function authenticate(Request $request)
