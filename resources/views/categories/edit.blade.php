@@ -25,8 +25,8 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xl-7 col-lg-8">
+<div class="row justify-content-center">
+    <div class="col-lg-8">
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
             <div class="card-body p-4 p-md-5">
                 <form action="{{ route('categories.update', $category) }}" method="POST">
@@ -44,8 +44,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="d-flex align-items-center gap-3">
                         <button type="submit" class="btn btn-premium btn-lg px-5 py-3 shadow-lg">
                             <i class="fas fa-save me-2"></i> Update Category
@@ -55,31 +53,6 @@
                         </a>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-5 col-lg-4 d-none d-lg-block">
-        <div class="card border-0 bg-primary bg-opacity-10 rounded-4 h-100 p-4 border-dashed">
-            <div class="card-body d-flex flex-column justify-content-center">
-                <div class="d-flex align-items-start mb-4">
-                    <div class="bg-white bg-opacity-50 p-2 rounded-3 me-3">
-                        <i class="fas fa-history text-primary"></i>
-                    </div>
-                    <div>
-                        <h6 class="fw-bold text-primary mb-1">Last Updated</h6>
-                        <p class="text-primary text-opacity-75 small mb-0">{{ $category->updated_at->diffForHumans() }}</p>
-                    </div>
-                </div>
-                <div class="d-flex align-items-start">
-                    <div class="bg-white bg-opacity-50 p-2 rounded-3 me-3">
-                        <i class="fas fa-calendar-alt text-primary"></i>
-                    </div>
-                    <div>
-                        <h6 class="fw-bold text-primary mb-1">Created On</h6>
-                        <p class="text-primary text-opacity-75 small mb-0">{{ $category->created_at->format('M d, Y at H:i') }}</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

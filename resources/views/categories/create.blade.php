@@ -26,8 +26,8 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xl-7 col-lg-8">
+<div class="row justify-content-center">
+    <div class="col-lg-8">
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
             <div class="card-body p-4 p-md-5">
                 <form action="{{ route('categories.store') }}" method="POST">
@@ -44,17 +44,6 @@
                         </div>
                     </div>
 
-                    <div class="mb-5">
-                        <label for="description" class="form-label small fw-bold text-uppercase ls-wide text-muted mb-2">Description <span class="text-lowercase fw-normal">(optional)</span></label>
-                        <div class="input-group">
-                            <span class="input-group-text px-3 border-end-0 rounded-start-4 align-items-start pt-3"><i class="fas fa-align-left"></i></span>
-                            <textarea class="form-control py-3 px-4 border-start-0 rounded-end-4 @error('description') is-invalid @enderror" id="description" name="description" rows="5" placeholder="Provide a brief description of what this category includes...">{{ old('description') }}</textarea>
-                            @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
                     <div class="d-flex align-items-center gap-3">
                         <button type="submit" class="btn btn-premium btn-lg px-5 py-3 shadow-lg">
                             <i class="fas fa-save me-2"></i> Create Category
@@ -64,20 +53,6 @@
                         </a>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-xl-5 col-lg-4 d-none d-lg-block">
-        <div class="card border-0 bg-primary bg-opacity-10 rounded-4 h-100 p-4 border-dashed">
-            <div class="card-body d-flex flex-column justify-content-center text-center">
-                <div class="mb-4">
-                    <i class="fas fa-lightbulb text-primary fs-1 opacity-50"></i>
-                </div>
-                <h5 class="fw-bold text-primary mb-3">Quick Tip</h5>
-                <p class="text-primary text-opacity-75 small mb-0">
-                    Categories help you organize products efficiently. Use clear, concise names like "Electronics" or "Furniture" to make searching easier later on.
-                </p>
             </div>
         </div>
     </div>
