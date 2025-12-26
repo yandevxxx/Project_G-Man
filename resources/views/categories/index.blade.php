@@ -26,6 +26,7 @@
                     <th class="ps-4 py-3 text-uppercase small fw-bold text-muted">Name</th>
 
                     <th class="py-3 text-uppercase small fw-bold text-muted">Created At</th>
+                    <th class="py-3 text-uppercase small fw-bold text-muted">Updated At</th>
                     <th class="pe-4 py-3 text-center text-uppercase small fw-bold text-muted">Actions</th>
                 </tr>
             </thead>
@@ -38,6 +39,9 @@
 
                     <td>
                         <span class="small text-muted">{{ $category->created_at->format('M d, Y') }}</span>
+                    </td>
+                    <td>
+                        <span class="small text-muted">{{ $category->updated_at->format('M d, Y') }}</span>
                     </td>
                     <td class="pe-4 text-center">
                         <div class="d-flex justify-content-center gap-2">
@@ -56,7 +60,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="text-center py-5">
+                    <td colspan="5" class="text-center py-5">
                         <div class="text-muted">
                             <i class="fas fa-folder-open fs-1 d-block mb-3 opacity-25"></i>
                             No categories found. Start by adding one!
