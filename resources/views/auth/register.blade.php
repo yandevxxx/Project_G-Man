@@ -41,7 +41,6 @@
                     <select class="form-select bg-light border-0 py-2" id="role" name="role" required>
                         <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="supplier" {{ old('role') == 'supplier' ? 'selected' : '' }}>Supplier</option>
                     </select>
                 </div>
                  <div class="col-md-6 mb-3">
