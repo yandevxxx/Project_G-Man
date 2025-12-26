@@ -61,6 +61,24 @@
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <label for="supplier_id" class="form-label small fw-bold text-uppercase ls-wide text-muted mb-2">Supplier <span class="text-lowercase fw-normal">(optional)</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text px-3 border-end-0 rounded-start-4"><i class="fas fa-truck"></i></span>
+                                <select class="form-select py-3 px-4 border-start-0 rounded-end-4 @error('supplier_id') is-invalid @enderror" id="supplier_id" name="supplier_id">
+                                    <option value="">No Supplier</option>
+                                    @foreach($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}" {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>{{ $supplier->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('supplier_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
                             <label for="stock" class="form-label small fw-bold text-uppercase ls-wide text-muted mb-2">Stock</label>
                             <div class="input-group">
                                 <span class="input-group-text px-3 border-end-0 rounded-start-4"><i class="fas fa-cubes"></i></span>
@@ -70,16 +88,15 @@
                                 @enderror
                             </div>
                         </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="price" class="form-label small fw-bold text-uppercase ls-wide text-muted mb-2">Price (Rp)</label>
-                        <div class="input-group">
-                            <span class="input-group-text px-3 border-end-0 rounded-start-4 fw-bold">Rp</span>
-                            <input type="number" class="form-control py-3 px-4 border-start-0 rounded-end-4 @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}" placeholder="0" min="0" required>
-                            @error('price')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <div class="col-md-6">
+                            <label for="price" class="form-label small fw-bold text-uppercase ls-wide text-muted mb-2">Price (Rp)</label>
+                            <div class="input-group">
+                                <span class="input-group-text px-3 border-end-0 rounded-start-4 fw-bold">Rp</span>
+                                <input type="number" class="form-control py-3 px-4 border-start-0 rounded-end-4 @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}" placeholder="0" min="0" required>
+                                @error('price')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
 

@@ -34,6 +34,13 @@
             <i class="fas fa-tags me-3 fs-5 {{ request()->routeIs('products.*') ? '' : 'text-primary-soft' }}"></i>
             <span class="fw-medium">Products</span>
         </a>
+
+        <a href="{{ route('suppliers.index') }}"
+            class="nav-link rounded-4 mb-2 d-flex align-items-center py-3 px-4 transition-all {{ request()->routeIs('suppliers.*') ? 'bg-primary text-white' : 'text-white text-opacity-75 hover-bg-white-10' }}"
+            style="{{ request()->routeIs('suppliers.*') ? 'background: var(--primary-gradient) !important; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);' : '' }}">
+            <i class="fas fa-truck me-3 fs-5 {{ request()->routeIs('suppliers.*') ? '' : 'text-primary-soft' }}"></i>
+            <span class="fw-medium">Suppliers</span>
+        </a>
     @endif
 </div>
 

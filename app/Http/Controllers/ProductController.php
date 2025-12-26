@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->latest()->get();
+        $products = Product::with(['category', 'supplier'])->latest()->get();
         return view('products.index', compact('products'));
     }
 
@@ -23,7 +24,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('products.create', compact('categories'));
+        $suppliers = Supplier::all();
+        return view('products.create', compact('categories', 'suppliers'));
     }
 
     /**
@@ -34,6 +36,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
@@ -50,7 +53,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
-        return view('products.edit', compact('product', 'categories'));
+        $suppliers = Supplier::all();
+        return view('products.edit', compact('product', 'categories', 'suppliers'));
     }
 
     /**
@@ -61,6 +65,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',

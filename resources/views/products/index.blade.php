@@ -25,6 +25,7 @@
                 <tr>
                     <th class="ps-4 py-3 text-uppercase small fw-bold text-muted">Product</th>
                     <th class="py-3 text-uppercase small fw-bold text-muted">Category</th>
+                    <th class="py-3 text-uppercase small fw-bold text-muted">Supplier</th>
                     <th class="py-3 text-uppercase small fw-bold text-muted">Price</th>
                     <th class="py-3 text-uppercase small fw-bold text-muted">Stock</th>
                     <th class="py-3 text-uppercase small fw-bold text-muted">Last Updated</th>
@@ -47,6 +48,16 @@
                     </td>
                     <td>
                         <span class="badge bg-light text-dark border">{{ $product->category->name ?? 'Uncategorized' }}</span>
+                    </td>
+                    <td>
+                        @if($product->supplier)
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-truck text-primary me-2"></i>
+                                <span class="text-muted">{{ $product->supplier->name }}</span>
+                            </div>
+                        @else
+                            <span class="text-muted small">-</span>
+                        @endif
                     </td>
                     <td>
                         <span class="fw-bold text-dark">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
@@ -78,7 +89,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-center py-5">
+                    <td colspan="7" class="text-center py-5">
                         <div class="text-muted">
                             <i class="fas fa-box-open fs-1 d-block mb-3 opacity-25"></i>
                             No products found. Start by adding one!
