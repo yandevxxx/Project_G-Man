@@ -24,10 +24,17 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    // User Routes
+    Route::get('/shop', [App\Http\Controllers\PurchaseController::class, 'catalog'])->name('purchases.catalog');
+    Route::get('/checkout/{id}', [App\Http\Controllers\PurchaseController::class, 'checkout'])->name('purchases.checkout');
+    Route::post('/checkout', [App\Http\Controllers\PurchaseController::class, 'processCheckout'])->name('purchases.process_checkout');
+    Route::get('/purchases/history', [App\Http\Controllers\PurchaseController::class, 'history'])->name('purchases.history');
+
     // Admin-only routes
     Route::middleware('admin')->group(function () {
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
         Route::resource('suppliers', SupplierController::class);
+        Route::get('/admin/transactions', [App\Http\Controllers\PurchaseController::class, 'adminIndex'])->name('admin.transactions');
     });
 });

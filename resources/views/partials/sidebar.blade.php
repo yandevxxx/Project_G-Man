@@ -41,6 +41,30 @@
             <i class="fas fa-truck me-3 fs-5 {{ request()->routeIs('suppliers.*') ? '' : 'text-primary-soft' }}"></i>
             <span class="fw-medium">Suppliers</span>
         </a>
+        
+        <a href="{{ route('admin.transactions') }}"
+            class="nav-link rounded-4 mb-2 d-flex align-items-center py-3 px-4 transition-all {{ request()->routeIs('admin.transactions') ? 'bg-primary text-white' : 'text-white text-opacity-75 hover-bg-white-10' }}"
+            style="{{ request()->routeIs('admin.transactions') ? 'background: var(--primary-gradient) !important; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);' : '' }}">
+            <i class="fas fa-chart-line me-3 fs-5 {{ request()->routeIs('admin.transactions') ? '' : 'text-primary-soft' }}"></i>
+            <span class="fw-medium">Transactions</span>
+        </a>
+    @else
+        <div class="px-4 mt-4 mb-2 small text-white text-opacity-25 text-uppercase fw-bold ls-wider"
+            style="font-size: 0.65rem;">Shopping</div>
+
+        <a href="{{ route('purchases.catalog') }}"
+            class="nav-link rounded-4 mb-2 d-flex align-items-center py-3 px-4 transition-all {{ request()->routeIs('purchases.catalog') ? 'bg-primary text-white' : 'text-white text-opacity-75 hover-bg-white-10' }}"
+            style="{{ request()->routeIs('purchases.catalog') ? 'background: var(--primary-gradient) !important; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);' : '' }}">
+            <i class="fas fa-store me-3 fs-5 {{ request()->routeIs('purchases.catalog') ? '' : 'text-primary-soft' }}"></i>
+            <span class="fw-medium">Shop</span>
+        </a>
+
+        <a href="{{ route('purchases.history') }}"
+            class="nav-link rounded-4 mb-2 d-flex align-items-center py-3 px-4 transition-all {{ request()->routeIs('purchases.history') ? 'bg-primary text-white' : 'text-white text-opacity-75 hover-bg-white-10' }}"
+            style="{{ request()->routeIs('purchases.history') ? 'background: var(--primary-gradient) !important; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);' : '' }}">
+            <i class="fas fa-history me-3 fs-5 {{ request()->routeIs('purchases.history') ? '' : 'text-primary-soft' }}"></i>
+            <span class="fw-medium">History</span>
+        </a>
     @endif
 </div>
 
