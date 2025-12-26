@@ -27,15 +27,12 @@
             <i class="fas fa-tags me-3 fs-5 {{ request()->routeIs('categories.*') ? '' : 'text-primary-soft' }}"></i>
             <span class="fw-medium">Categories</span>
         </a>
-    @endif
 
-    @if (Auth::user()->role == 'supplier')
-        <div class="px-4 mt-4 mb-2 small text-white text-opacity-25 text-uppercase fw-bold ls-wider"
-            style="font-size: 0.65rem;">Partner Portal</div>
-        <a href="#"
-            class="nav-link rounded-4 mb-2 d-flex align-items-center py-3 px-4 text-white text-opacity-75 hover-bg-white-10">
-            <i class="fas fa-truck-loading me-3 fs-5 text-warning"></i>
-            <span class="fw-medium">Supply Requests</span>
+        <a href="{{ route('products.index') }}"
+            class="nav-link rounded-4 mb-2 d-flex align-items-center py-3 px-4 transition-all {{ request()->routeIs('products.*') ? 'bg-primary text-white' : 'text-white text-opacity-75 hover-bg-white-10' }}"
+            style="{{ request()->routeIs('products.*') ? 'background: var(--primary-gradient) !important; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);' : '' }}">
+            <i class="fas fa-tags me-3 fs-5 {{ request()->routeIs('products.*') ? '' : 'text-primary-soft' }}"></i>
+            <span class="fw-medium">Products</span>
         </a>
     @endif
 </div>
