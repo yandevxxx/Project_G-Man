@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
 
+    // Global Search
+    Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+
     // Admin-only routes
     Route::middleware('admin')->group(function () {
         Route::resource('categories', CategoryController::class);

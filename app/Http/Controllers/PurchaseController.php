@@ -19,7 +19,7 @@ class PurchaseController extends Controller
     public function checkout($id)
     {
         $product = Product::findOrFail($id);
-        
+
         if ($product->stock <= 0) {
             return redirect()->route('purchases.catalog')->with('error', 'Product is out of stock!');
         }
@@ -41,7 +41,7 @@ class PurchaseController extends Controller
 
         try {
             $product = Product::lockForUpdate()->find($product_id);
-            
+
             if (!$product || $product->stock < $quantity) {
                 throw new \Exception("Product {$product->name} is out of stock or insufficient quantity!");
             }
@@ -63,7 +63,6 @@ class PurchaseController extends Controller
             DB::commit();
 
             return redirect()->route('purchases.history')->with('success', 'Purchase completed successfully!');
-
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Checkout failed: ' . $e->getMessage());
@@ -85,7 +84,7 @@ class PurchaseController extends Controller
         $purchases = Purchase::with(['user', 'product'])
             ->latest()
             ->paginate(15);
-            
+
         return view('purchases.admin_index', compact('purchases'));
     }
 }

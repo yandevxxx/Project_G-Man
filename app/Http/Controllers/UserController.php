@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -42,17 +42,16 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User deleted successfully!');
     }
 
-    // Profile Management
     public function editProfile()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         return view('profile.edit', compact('user'));
     }
 
     public function updateProfile(Request $request)
     {
-        $user = auth()->user();
-        
+        $user = Auth::user();
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],

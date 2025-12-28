@@ -4,14 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>G-Man | Professional Warehouse Management</title>
-    
-    <!-- Google Fonts: Plus Jakarta Sans -->
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap 5 -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
@@ -28,16 +25,16 @@
             --glass-blur: blur(12px);
         }
 
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--bg-body); 
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
             color: #1e293b;
             overflow-x: hidden;
             letter-spacing: -0.01em;
         }
 
-        .bg-premium { 
-            background: var(--primary-gradient) !important; 
+        .bg-premium {
+            background: var(--primary-gradient) !important;
         }
 
         #wrapper {
@@ -64,18 +61,18 @@
             background-color: var(--bg-body);
         }
 
-        .topbar { 
-            height: var(--topbar-height); 
-            background: var(--glass-bg); 
+        .topbar {
+            height: var(--topbar-height);
+            background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            padding: 0 2rem; 
-            position: sticky; 
-            top: 0; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
             z-index: 999;
         }
 
@@ -101,7 +98,7 @@
         .card:hover {
             box-shadow: var(--premium-shadow);
         }
-        
+
         /* Auth Layout */
         .auth-container {
             min-height: 100vh;
@@ -197,7 +194,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const toggleButtons = document.querySelectorAll('[data-bs-toggle="sidebar"]');
             const sidebar = document.getElementById('sidebar-wrapper');
-            
+
             toggleButtons.forEach(btn => {
                 btn.addEventListener('click', function() {
                     sidebar.classList.toggle('active');
