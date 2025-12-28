@@ -42,6 +42,13 @@
             <span class="fw-medium">Suppliers</span>
         </a>
         
+         <a href="{{ route('users.index') }}"
+            class="nav-link rounded-4 mb-2 d-flex align-items-center py-3 px-4 transition-all {{ request()->routeIs('users.*') ? 'bg-primary text-white' : 'text-white text-opacity-75 hover-bg-white-10' }}"
+            style="{{ request()->routeIs('users.*') ? 'background: var(--primary-gradient) !important; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);' : '' }}">
+            <i class="fas fa-users me-3 fs-5 {{ request()->routeIs('users.*') ? '' : 'text-primary-soft' }}"></i>
+            <span class="fw-medium">User Management</span>
+        </a>
+
         <a href="{{ route('admin.transactions') }}"
             class="nav-link rounded-4 mb-2 d-flex align-items-center py-3 px-4 transition-all {{ request()->routeIs('admin.transactions') ? 'bg-primary text-white' : 'text-white text-opacity-75 hover-bg-white-10' }}"
             style="{{ request()->routeIs('admin.transactions') ? 'background: var(--primary-gradient) !important; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);' : '' }}">

@@ -33,7 +33,7 @@
                 </div>
             </button>
             <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-4 animate-slide-in">
-                <li><a class="dropdown-item py-2 px-3 rounded-3 mb-1" href="#"><i
+                <li><a class="dropdown-item py-2 px-3 rounded-3 mb-1" href="{{ route('profile.edit') }}"><i
                             class="fas fa-user-circle me-3 opacity-50"></i>My Profile</a></li>
                 <li>
                     <hr class="dropdown-divider opacity-10">

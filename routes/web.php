@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,11 +31,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [App\Http\Controllers\PurchaseController::class, 'processCheckout'])->name('purchases.process_checkout');
     Route::get('/purchases/history', [App\Http\Controllers\PurchaseController::class, 'history'])->name('purchases.history');
 
+    // Profile Management
+    Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
+
     // Admin-only routes
     Route::middleware('admin')->group(function () {
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
         Route::resource('suppliers', SupplierController::class);
         Route::get('/admin/transactions', [App\Http\Controllers\PurchaseController::class, 'adminIndex'])->name('admin.transactions');
+        
+        // User Management
+        Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     });
 });
