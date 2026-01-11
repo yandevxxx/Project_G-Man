@@ -19,8 +19,8 @@
         </div>
 
         <!-- Welcome Section -->
-        <h3 class="fw-bold text-dark h5 mb-2 mt-1">Welcome Back</h3>
-        <p class="text-muted small px-3">Enter your credentials to manage your inventory</p>
+        <h3 class="fw-bold text-dark h5 mb-2 mt-1">Forgot Password?</h3>
+        <p class="text-muted small px-3">Enter your email and we'll send you a link to reset your password</p>
     </div>
 
     @if (session('success'))
@@ -29,46 +29,31 @@
         </div>
     @endif
 
-    @if (session('error'))
-        <div class="alert alert-danger border-0 rounded-4 mb-4 py-3 px-4 small shadow-sm">
-            <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
-        </div>
-    @endif
-
-    <form action="{{ route('login.authenticate') }}" method="POST">
+    <form action="{{ route('password.email') }}" method="POST">
         @csrf
 
-        <div class="mb-4">
+        <div class="mb-5">
             <label for="email" class="form-label small fw-bold text-secondary ms-1 mb-2 text-uppercase tracking-wide" style="font-size: 0.75rem;">Email Address</label>
             <div class="input-group">
                 <span class="input-group-text border-0"><i class="fas fa-envelope text-muted" style="font-size: 0.9rem;"></i></span>
-                <input type="email" class="form-control" id="email" name="email"
+                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
                     placeholder="name@example.com" value="{{ old('email') }}" required autofocus>
             </div>
-        </div>
-
-        <div class="mb-5">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <label for="password" class="form-label small fw-bold text-secondary ms-1 mb-0 text-uppercase tracking-wide" style="font-size: 0.75rem;">Password</label>
-                <a href="{{ route('password.request') }}" class="text-primary-soft small fw-bold text-decoration-none hover-underline" style="font-size: 0.75rem;">Forgot Password?</a>
-            </div>
-            <div class="input-group">
-                <span class="input-group-text border-0"><i class="fas fa-lock text-muted" style="font-size: 0.9rem;"></i></span>
-                <input type="password" class="form-control" id="password" name="password"
-                    placeholder="••••••••" required>
-            </div>
+            @error('email')
+                <div class="text-danger small ms-1 mt-2">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="d-grid mb-5">
             <button type="submit" class="btn btn-premium shadow-lg">
-                <span>Sign In to Account</span>
-                <i class="fas fa-arrow-right ms-2" style="font-size: 0.8rem;"></i>
+                <span>Send Reset Link</span>
+                <i class="fas fa-paper-plane ms-2" style="font-size: 0.8rem;"></i>
             </button>
         </div>
 
         <div class="text-center pt-3 border-top border-light">
-            <p class="text-muted small mb-0">New to G-Man? <a href="{{ route('register') }}"
-                    class="text-primary fw-bold text-decoration-none hover-underline">Create an account</a></p>
+            <p class="text-muted small mb-0">Remembered your password? <a href="{{ route('login') }}"
+                    class="text-primary fw-bold text-decoration-none hover-underline">Back to login</a></p>
         </div>
     </form>
 @endsection
