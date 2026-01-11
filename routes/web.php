@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('products', ProductController::class);
         Route::resource('suppliers', SupplierController::class);
         Route::get('/admin/transactions', [App\Http\Controllers\PurchaseController::class, 'adminIndex'])->name('admin.transactions');
-        
+
         // User Management
         Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
         Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
@@ -52,3 +52,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     });
 });
+
+
+
+// tambahkan status vending pembelian
+// tambahkan forgot password (sekalian update tampilan login register)
+// buat tampilan product admin jadikan card
+// implementasikan gambar di product
+// dashboard update tampilan
