@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel untuk mengkategorikan produk
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
+            $table->id(); // ID Primary Key
+            $table->string('name'); // Nama kategori produk (misal: Suku Cadang, Alat Bengkel)
+            $table->timestamps(); // Kolom created_at dan updated_at
         });
     }
 

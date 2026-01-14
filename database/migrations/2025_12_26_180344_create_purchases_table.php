@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel untuk mencatat transaksi pembelian produk oleh pengguna
         Schema::create('purchases', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity');
-            $table->decimal('price', 12, 2);
-            $table->decimal('total_amount', 12, 2);
-            $table->string('payment_proof')->nullable();
-            $table->string('status')->default('completed');
-            $table->timestamps();
+            $table->id(); // ID Primary Key
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relasi ke pembeli (users)
+            $table->foreignId('product_id')->constrained()->onDelete('cascade'); // Relasi ke produk yang dibeli
+            $table->integer('quantity'); // Jumlah barang yang dibeli
+            $table->decimal('price', 12, 2); // Harga satuan saat transaksi dilakukan
+            $table->decimal('total_amount', 12, 2); // Total nilai transaksi (jumlah x harga)
+            $table->string('payment_proof')->nullable(); // Nama file bukti pembayaran (boleh kosong)
+            $table->string('status')->default('completed'); // Status transaksi (misal: pending, completed, rejected)
+            $table->timestamps(); // Kolom created_at dan updated_at
         });
     }
 

@@ -59,7 +59,5 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// tambahkan status vending pembelian
-// tambahkan forgot password (sekalian update tampilan login register)
-// buat tampilan product admin jadikan card
-// implementasikan gambar di product
+// tambahkan invoice alur pembayaran user
+// tambahkan type payment

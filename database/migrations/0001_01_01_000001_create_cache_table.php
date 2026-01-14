@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel untuk menyimpan data cache aplikasi
         Schema::create('cache', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->mediumText('value');
-            $table->integer('expiration');
+            $table->string('key')->primary(); // Kunci identifikasi cache
+            $table->mediumText('value'); // Nilai cache yang disimpan
+            $table->integer('expiration'); // Waktu kadaluarsa cache
         });
 
+        // Tabel untuk mekanisme locking cache (menghindari race condition)
         Schema::create('cache_locks', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->string('owner');
-            $table->integer('expiration');
+            $table->string('key')->primary(); // Kunci lock
+            $table->string('owner'); // Pemilik lock (identifier)
+            $table->integer('expiration'); // Waktu kadaluarsa lock
         });
     }
 

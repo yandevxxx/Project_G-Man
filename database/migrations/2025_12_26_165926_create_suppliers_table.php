@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel untuk mengelola data pemasok (suppliers) barang
         Schema::create('suppliers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('contact_person')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
-            $table->text('address')->nullable();
-            $table->timestamps();
+            $table->id(); // ID Primary Key
+            $table->string('name'); // Nama perusahaan/pemasok
+            $table->string('contact_person')->nullable(); // Nama penanggung jawab (boleh kosong)
+            $table->string('phone')->nullable(); // Nomor telepon pemasok (boleh kosong)
+            $table->string('email')->nullable(); // Alamat email pemasok (boleh kosong)
+            $table->text('address')->nullable(); // Alamat lengkap pemasok (boleh kosong)
+            $table->timestamps(); // Kolom created_at dan updated_at
         });
     }
 
