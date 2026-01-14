@@ -16,11 +16,11 @@ class ProductController extends Controller
         $products = Product::with(['category', 'supplier'])
             ->when($query, function ($q) use ($query) {
                 return $q->where('name', 'LIKE', "%{$query}%")
-                         ->orWhere('description', 'LIKE', "%{$query}%");
+                    ->orWhere('description', 'LIKE', "%{$query}%");
             })
             ->latest()
             ->get();
-            
+
         return view('products.index', compact('products'));
     }
 
@@ -72,7 +72,6 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Delete old image
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }

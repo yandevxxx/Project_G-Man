@@ -5,6 +5,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,34 +29,32 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // User Routes
-    Route::get('/shop', [App\Http\Controllers\PurchaseController::class, 'catalog'])->name('purchases.catalog');
-    Route::get('/checkout/{id}', [App\Http\Controllers\PurchaseController::class, 'checkout'])->name('purchases.checkout');
-    Route::post('/checkout', [App\Http\Controllers\PurchaseController::class, 'processCheckout'])->name('purchases.process_checkout');
-    Route::get('/purchases/history', [App\Http\Controllers\PurchaseController::class, 'history'])->name('purchases.history');
+    Route::get('/shop', [PurchaseController::class, 'catalog'])->name('purchases.catalog');
+    Route::get('/checkout/{id}', [PurchaseController::class, 'checkout'])->name('purchases.checkout');
+    Route::post('/checkout', [PurchaseController::class, 'processCheckout'])->name('purchases.process_checkout');
+    Route::get('/purchases/history', [PurchaseController::class, 'history'])->name('purchases.history');
 
     // Profile Management
     Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
-
-
 
     // Admin-only routes
     Route::middleware('admin')->group(function () {
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
         Route::resource('suppliers', SupplierController::class);
-        Route::get('/admin/transactions', [App\Http\Controllers\PurchaseController::class, 'adminIndex'])->name('admin.transactions');
-        Route::post('/admin/transactions/{id}/approve', [App\Http\Controllers\PurchaseController::class, 'approve'])->name('admin.transactions.approve');
-        Route::post('/admin/transactions/{id}/reject', [App\Http\Controllers\PurchaseController::class, 'reject'])->name('admin.transactions.reject');
+        Route::get('/admin/transactions', [PurchaseController::class, 'adminIndex'])->name('admin.transactions');
+        Route::post('/admin/transactions/{id}/approve', [PurchaseController::class, 'approve'])->name('admin.transactions.approve');
+        Route::post('/admin/transactions/{id}/reject', [PurchaseController::class, 'reject'])->name('admin.transactions.reject');
 
         // User Management
-        Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-        Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
-        Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
-        Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });
 });
 

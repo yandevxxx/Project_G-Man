@@ -13,11 +13,11 @@ class UserController extends Controller
     {
         $query = $request->get('q');
         $users = User::when($query, function ($q) use ($query) {
-                return $q->where('name', 'LIKE', "%{$query}%")
-                         ->orWhere('email', 'LIKE', "%{$query}%");
-            })
+            return $q->where('name', 'LIKE', "%{$query}%")
+                ->orWhere('email', 'LIKE', "%{$query}%");
+        })
             ->paginate(10);
-            
+
         return view('users.index', compact('users'));
     }
 
@@ -50,12 +50,14 @@ class UserController extends Controller
 
     public function editProfile()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         return view('profile.edit', compact('user'));
     }
 
     public function updateProfile(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         $validated = $request->validate([
