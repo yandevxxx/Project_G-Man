@@ -78,9 +78,15 @@ class PurchaseController extends Controller
         }
     }
 
-    public function history()
+    public function history(Request $request)
     {
+        $query = $request->get('q');
         $purchases = Purchase::where('user_id', Auth::id())
+            ->when($query, function ($q) use ($query) {
+                return $q->whereHas('product', function ($p) use ($query) {
+                    $p->where('name', 'LIKE', "%{$query}%");
+                })->orWhere('id', 'LIKE', "%{$query}%");
+            })
             ->with(['product'])
             ->latest()
             ->get();
@@ -88,9 +94,17 @@ class PurchaseController extends Controller
         return view('purchases.history', compact('purchases'));
     }
 
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
+        $query = $request->get('q');
         $purchases = Purchase::with(['user', 'product'])
+            ->when($query, function ($q) use ($query) {
+                return $q->whereHas('product', function ($p) use ($query) {
+                    $p->where('name', 'LIKE', "%{$query}%");
+                })->orWhereHas('user', function ($u) use ($query) {
+                    $u->where('name', 'LIKE', "%{$query}%");
+                })->orWhere('id', 'LIKE', "%{$query}%");
+            })
             ->latest()
             ->paginate(15);
 

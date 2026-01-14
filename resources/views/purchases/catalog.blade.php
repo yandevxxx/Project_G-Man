@@ -2,27 +2,25 @@
 
 @section('content')
     <div class="mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="h3 mb-1 fw-bold tracking-tight">Shop</h2>
-                <p class="text-muted small mb-0">Browse our exclusive collection.</p>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <form action="{{ route('purchases.catalog') }}" method="GET" class="d-flex align-items-center">
-                    <div class="input-group">
-                        <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted opacity-50 small"></i></span>
-                        <input type="text" name="q" class="form-control bg-light border-0 ps-2 rounded-end-pill shadow-none"
-                            style="width: 250px; font-size: 0.85rem;" placeholder="Search shop..." 
-                            value="{{ request('q') }}">
-                        @if(request('q'))
-                            <a href="{{ route('purchases.catalog') }}" class="btn btn-light border-0 small ms-1 rounded-circle">
-                                <i class="fas fa-times text-muted"></i>
-                            </a>
-                        @endif
-                    </div>
-                </form>
-            </div>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
+        <div>
+            <h2 class="h3 mb-1 fw-800 tracking-tight text-slate-900">Premium Catalog</h2>
+            <p class="text-muted fw-500 mb-0">Discover our exclusive selection of high-quality products.</p>
         </div>
+        <div class="d-flex align-items-center gap-3">
+            <form action="{{ route('purchases.catalog') }}" method="GET" class="position-relative">
+                <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted opacity-50 small"></i>
+                <input type="text" name="q" class="form-control glass-input shadow-none"
+                    style="width: 280px; font-size: 0.85rem;" placeholder="Search products..." 
+                    value="{{ request('q') }}">
+                @if(request('q'))
+                    <a href="{{ route('purchases.catalog') }}" class="position-absolute top-50 end-0 translate-middle-y me-2 text-muted hover-opacity-100">
+                        <i class="fas fa-times-circle fs-7"></i>
+                    </a>
+                @endif
+            </form>
+        </div>
+    </div>
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert">

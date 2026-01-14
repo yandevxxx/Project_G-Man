@@ -1,24 +1,22 @@
 @extends('partials.app')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
         <div>
-            <h2 class="h3 mb-1 fw-bold">User Management</h2>
-            <p class="text-muted small mb-0">Manage user accounts and permissions.</p>
+            <h2 class="h3 mb-1 fw-800 tracking-tight text-slate-900">User Management</h2>
+            <p class="text-muted fw-500 mb-0">Manage user accounts and system permissions.</p>
         </div>
         <div class="d-flex align-items-center gap-3">
-            <form action="{{ route('users.index') }}" method="GET" class="d-flex align-items-center">
-                <div class="input-group">
-                    <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted opacity-50 small"></i></span>
-                    <input type="text" name="q" class="form-control bg-light border-0 ps-2 rounded-end-pill shadow-none"
-                        style="width: 250px; font-size: 0.85rem;" placeholder="Search users..." 
-                        value="{{ request('q') }}">
-                    @if(request('q'))
-                        <a href="{{ route('users.index') }}" class="btn btn-light border-0 small ms-1 rounded-circle">
-                            <i class="fas fa-times text-muted"></i>
-                        </a>
-                    @endif
-                </div>
+            <form action="{{ route('users.index') }}" method="GET" class="position-relative">
+                <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted opacity-50 small"></i>
+                <input type="text" name="q" class="form-control glass-input shadow-none"
+                    style="width: 250px; font-size: 0.85rem;" placeholder="Search users..." 
+                    value="{{ request('q') }}">
+                @if(request('q'))
+                    <a href="{{ route('users.index') }}" class="position-absolute top-50 end-0 translate-middle-y me-2 text-muted hover-opacity-100">
+                        <i class="fas fa-times-circle fs-7"></i>
+                    </a>
+                @endif
             </form>
         </div>
     </div>
@@ -48,8 +46,8 @@
                         <tr>
                             <td class="ps-4">
                                 <div class="d-flex align-items-center">
-                                    <div class="bg-light rounded-circle me-3 d-flex align-items-center justify-content-center text-primary fw-bold"
-                                        style="width: 40px; height: 40px;">
+                                    <div class="bg-primary-soft rounded-circle me-3 d-flex align-items-center justify-content-center text-primary-soft fw-bold"
+                                        style="width: 40px; height: 40px; background: rgba(99, 102, 241, 0.1); color: #6366f1;">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </div>
                                     <div>
@@ -59,37 +57,37 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="text-muted">{{ $user->email }}</span>
+                                <span class="text-slate-600 fw-500">{{ $user->email }}</span>
                             </td>
                             <td>
                                 @if ($user->role === 'admin')
-                                    <span class="badge bg-danger bg-opacity-10 text-danger">
+                                    <span class="soft-badge bg-danger-soft">
                                         <i class="fas fa-shield-alt me-1"></i> Admin
                                     </span>
                                 @else
-                                    <span class="badge bg-primary bg-opacity-10 text-primary">
+                                    <span class="soft-badge bg-primary-soft">
                                         <i class="fas fa-user me-1"></i> User
                                     </span>
                                 @endif
                             </td>
                             <td>
-                                <span class="small text-muted">{{ $user->jenis_kelamin }}</span>
+                                <span class="small text-muted fw-500">{{ $user->jenis_kelamin }}</span>
                             </td>
                             <td>
-                                <span class="small text-muted">{{ $user->pekerjaan ?? '-' }}</span>
+                                <span class="small text-muted fw-500">{{ $user->pekerjaan ?? '-' }}</span>
                             </td>
                             <td class="pe-4 text-center">
                                 <div class="d-flex justify-content-center gap-2">
                                     <a href="{{ route('users.edit', $user->id) }}"
-                                        class="btn btn-sm btn-outline-primary rounded-3">
-                                        <i class="fas fa-edit"></i>
+                                        class="btn btn-sm btn-outline-primary rounded-3 border-0 bg-primary-soft hover-translate-y">
+                                        <i class="fas fa-pencil-alt"></i>
                                     </a>
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline"
                                         onsubmit="return confirm('Are you sure you want to delete this user?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-3">
-                                            <i class="fas fa-trash"></i>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-3 border-0 bg-danger-soft hover-translate-y">
+                                            <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
                                 </div>
@@ -98,10 +96,11 @@
                     @empty
                         <tr>
                             <td colspan="6" class="text-center py-5">
-                                <div class="text-muted">
-                                    <i class="fas fa-users fs-1 d-block mb-3 opacity-25"></i>
-                                    No users found.
+                                <div class="empty-state-icon">
+                                    <i class="fas fa-users"></i>
                                 </div>
+                                <h5 class="fw-bold text-dark mb-1">No users found</h5>
+                                <p class="text-muted small mb-0">There are no users matching your criteria.</p>
                             </td>
                         </tr>
                     @endforelse

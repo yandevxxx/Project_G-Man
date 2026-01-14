@@ -1,34 +1,5 @@
 @extends('partials.app')
 
-@section('css')
-    <style>
-        .ls-wide {
-            letter-spacing: 0.05em;
-        }
-
-        .form-floating>label {
-            padding-left: 3rem;
-        }
-
-        .input-group-text {
-            border: none;
-            background-color: #f8fafc;
-            color: #64748b;
-        }
-
-        .form-control,
-        .form-select {
-            border: 1px solid #e2e8f0;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-            border-color: #6366f1;
-        }
-    </style>
-@endsection
-
 @section('content')
     <div class="mb-5">
         <a href="{{ route('products.index') }}"
@@ -36,12 +7,12 @@
             <i class="fas fa-arrow-left me-1"></i> Back to Products
         </a>
         <div class="d-flex align-items-center">
-            <div class="bg-primary bg-opacity-10 p-3 rounded-4 me-3 shadow-sm text-primary">
-                <i class="fas fa-plus-circle fs-3"></i>
+            <div class="bg-primary-soft p-3 rounded-4 me-3 shadow-sm">
+                <i class="fas fa-plus-circle fs-3 text-primary"></i>
             </div>
             <div>
-                <h2 class="h3 mb-1 fw-bold tracking-tight">Add New Product</h2>
-                <p class="text-muted small mb-0">Add a new item to your inventory.</p>
+                <h2 class="h3 mb-1 fw-800 tracking-tight text-slate-900">Add New Product</h2>
+                <p class="text-muted fw-500 mb-0">List a new item in your inventory catalog.</p>
             </div>
         </div>
     </div>

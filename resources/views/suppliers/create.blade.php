@@ -1,32 +1,5 @@
 @extends('partials.app')
 
-@section('css')
-    <style>
-        .ls-wide {
-            letter-spacing: 0.05em;
-        }
-
-        .form-floating>label {
-            padding-left: 3rem;
-        }
-
-        .input-group-text {
-            border: none;
-            background-color: #f8fafc;
-            color: #64748b;
-        }
-
-        .form-control {
-            border: 1px solid #e2e8f0;
-        }
-
-        .form-control:focus {
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-            border-color: #6366f1;
-        }
-    </style>
-@endsection
-
 @section('content')
     <div class="mb-5">
         <a href="{{ route('suppliers.index') }}"
@@ -34,12 +7,12 @@
             <i class="fas fa-arrow-left me-1"></i> Back to Suppliers
         </a>
         <div class="d-flex align-items-center">
-            <div class="bg-primary bg-opacity-10 p-3 rounded-4 me-3 shadow-sm text-primary">
-                <i class="fas fa-truck fs-3"></i>
+            <div class="bg-primary-soft p-3 rounded-4 me-3 shadow-sm">
+                <i class="fas fa-truck fs-3 text-primary"></i>
             </div>
             <div>
-                <h2 class="h3 mb-1 fw-bold tracking-tight">Add New Supplier</h2>
-                <p class="text-muted small mb-0">Register a new supplier to manage product sourcing.</p>
+                <h2 class="h3 mb-1 fw-800 tracking-tight text-slate-900">Add New Supplier</h2>
+                <p class="text-muted fw-500 mb-0">Partner with a new supplier for your inventory needs.</p>
             </div>
         </div>
     </div>

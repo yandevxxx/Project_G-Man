@@ -322,6 +322,55 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        /* Global Polish Utilities */
+        .glass-input {
+            background: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 100px !important;
+            padding-left: 3rem !important;
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus {
+            background: #fff !important;
+            border-color: var(--primary-soft) !important;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+        }
+
+        .soft-badge {
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            letter-spacing: 0.025em;
+        }
+
+        .bg-primary-soft { background: rgba(99, 102, 241, 0.1) !important; color: #6366f1 !important; }
+        .bg-success-soft { background: rgba(16, 185, 129, 0.1) !important; color: #10b981 !important; }
+        .bg-danger-soft { background: rgba(239, 68, 68, 0.1) !important; color: #ef4444 !important; }
+        .bg-warning-soft { background: rgba(245, 158, 11, 0.1) !important; color: #f59e0b !important; }
+        .bg-info-soft { background: rgba(6, 182, 212, 0.1) !important; color: #06b6d4 !important; }
+
+        .hover-translate-y {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hover-translate-y:hover {
+            transform: translateY(-4px);
+        }
+
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            color: #cbd5e1;
+            font-size: 2rem;
+        }
     </style>
     @yield('css')
 </head>
