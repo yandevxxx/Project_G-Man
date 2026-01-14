@@ -32,7 +32,7 @@
     <form action="{{ route('password.email') }}" method="POST">
         @csrf
 
-        <div class="mb-5">
+        <div class="mb-4">
             <label for="email" class="form-label small fw-bold text-secondary ms-1 mb-2 text-uppercase tracking-wide" style="font-size: 0.75rem;">Email Address</label>
             <div class="input-group">
                 <span class="input-group-text border-0"><i class="fas fa-envelope text-muted" style="font-size: 0.9rem;"></i></span>
@@ -44,10 +44,23 @@
             @enderror
         </div>
 
+        <div class="mb-4">
+            <label for="password" class="form-label small fw-bold text-secondary ms-1 mb-2 text-uppercase tracking-wide" style="font-size: 0.75rem;">Old Password</label>
+            <div class="input-group">
+                <span class="input-group-text border-0"><i class="fas fa-lock text-muted" style="font-size: 0.9rem;"></i></span>
+                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password"
+                    placeholder="Enter your old password" required>
+            </div>
+            @error('password')
+                <div class="text-danger small ms-1 mt-2">{{ $message }}</div>
+            @enderror
+        </div>
+
+
         <div class="d-grid mb-5">
             <button type="submit" class="btn btn-premium shadow-lg">
-                <span>Send Reset Link</span>
-                <i class="fas fa-paper-plane ms-2" style="font-size: 0.8rem;"></i>
+                <span>Verify Identity</span>
+                <i class="fas fa-shield-alt ms-2" style="font-size: 0.8rem;"></i>
             </button>
         </div>
 

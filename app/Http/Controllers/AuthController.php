@@ -84,30 +84,39 @@ class AuthController extends Controller
         return view('auth.forgot-password');
     }
 
-    public function sendResetLinkEmail(Request $request)
+    public function verifyResetCredentials(Request $request)
     {
-        $request->validate(['email' => 'required|email|exists:users,email']);
+        $request->validate([
+            'email' => ['required', 'email', 'exists:users,email'],
+            'password' => ['required'],
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'The provided password does not match our records.'])->withInput();
+        }
 
         $token = Str::random(64);
+        session([
+            'reset_verified_email' => $request->email,
+            'reset_verified_token' => $token
+        ]);
 
-        DB::table('password_reset_tokens')->updateOrInsert(
-            ['email' => $request->email],
-            [
-                'email' => $request->email,
-                'token' => Hash::make($token),
-                'created_at' => Carbon::now()
-            ]
-        );
-
-        // In a real app, you would send an email. For now, we'll log it.
-        \Log::info("Password Reset Link: " . route('password.reset', ['token' => $token, 'email' => $request->email]));
-
-        return back()->with('success', 'Reset link has been logged! Check storage/logs/laravel.log');
+        return redirect()->route('password.reset', ['token' => $token]);
     }
+
 
     public function resetPassword(Request $request, $token)
     {
-        return view('auth.reset-password', ['token' => $token, 'email' => $request->email]);
+        if (session('reset_verified_token') !== $token) {
+            return redirect()->route('password.request')->withErrors(['email' => 'Please verify your identity first.']);
+        }
+
+        return view('auth.reset-password', [
+            'token' => $token, 
+            'email' => session('reset_verified_email')
+        ]);
     }
 
     public function updatePassword(Request $request)
@@ -118,18 +127,14 @@ class AuthController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
-        $reset = DB::table('password_reset_tokens')->where([
-            'email' => $request->email,
-        ])->first();
-
-        if (!$reset || !Hash::check($request->token, $reset->token)) {
-            return back()->withErrors(['email' => 'Invalid token or email.']);
+        if (session('reset_verified_token') !== $request->token || session('reset_verified_email') !== $request->email) {
+            return redirect()->route('password.request')->withErrors(['email' => 'Session expired or invalid. Please verify again.']);
         }
 
         $user = User::where('email', $request->email)->first();
         $user->update(['password' => Hash::make($request->password)]);
 
-        DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
+        session()->forget(['reset_verified_email', 'reset_verified_token']);
 
         return redirect()->route('login')->with('success', 'Password has been reset successfully!');
     }
