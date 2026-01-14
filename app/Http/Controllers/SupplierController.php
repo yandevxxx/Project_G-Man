@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $suppliers = Supplier::withCount('products')->latest()->get();
+        $query = $request->get('q');
+        $suppliers = Supplier::withCount('products')
+            ->when($query, function ($q) use ($query) {
+                return $q->where('name', 'LIKE', "%{$query}%")
+                         ->orWhere('contact_person', 'LIKE', "%{$query}%")
+                         ->orWhere('email', 'LIKE', "%{$query}%");
+            })
+            ->latest()
+            ->get();
+            
         return view('suppliers.index', compact('suppliers'));
     }
 

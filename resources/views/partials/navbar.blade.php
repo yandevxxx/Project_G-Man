@@ -10,29 +10,8 @@
     </div>
 
     <div class="d-flex align-items-center gap-4">
-        <!-- Search bar with filter -->
-        <form action="{{ route('search') }}" method="GET" class="d-none d-lg-flex align-items-center gap-2">
-            @if(Auth::user()->role === 'admin')
-                <select name="filter" class="form-select bg-light border-0 rounded-pill shadow-none" style="width: 140px; font-size: 0.85rem;">
-                    <option value="all" {{ request('filter', 'all') == 'all' ? 'selected' : '' }}>All</option>
-                    <option value="products" {{ request('filter') == 'products' ? 'selected' : '' }}>Products</option>
-                    <option value="categories" {{ request('filter') == 'categories' ? 'selected' : '' }}>Categories</option>
-                    <option value="suppliers" {{ request('filter') == 'suppliers' ? 'selected' : '' }}>Suppliers</option>
-                    <option value="users" {{ request('filter') == 'users' ? 'selected' : '' }}>Users</option>
-                </select>
-            @else
-                <select name="filter" class="form-select bg-light border-0 rounded-pill shadow-none" style="width: 140px; font-size: 0.85rem;" disabled>
-                    <option value="products" selected>Products</option>
-                </select>
-                <input type="hidden" name="filter" value="products">
-            @endif
-            <div class="position-relative">
-                <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted opacity-50 small"></i>
-                <input type="text" name="q" class="form-control bg-light border-0 ps-5 rounded-pill shadow-none"
-                    style="width: 240px; font-size: 0.85rem;" placeholder="Search by name..." 
-                    value="{{ request('q') }}" required>
-            </div>
-        </form>
+        <!-- Navbar Brand/Space -->
+        <div class="flex-grow-1"></div>
 
         <!-- User profile -->
         <div class="dropdown">

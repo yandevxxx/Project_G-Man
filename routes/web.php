@@ -27,9 +27,7 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     // User Routes
     Route::get('/shop', [App\Http\Controllers\PurchaseController::class, 'catalog'])->name('purchases.catalog');
@@ -41,8 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
 
-    // Global Search
-    Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+
 
     // Admin-only routes
     Route::middleware('admin')->group(function () {
@@ -60,9 +57,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
 // tambahkan status vending pembelian
 // tambahkan forgot password (sekalian update tampilan login register)
 // buat tampilan product admin jadikan card
 // implementasikan gambar di product
-// dashboard update tampilan

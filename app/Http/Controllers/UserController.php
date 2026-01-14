@@ -9,9 +9,15 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
+        $query = $request->get('q');
+        $users = User::when($query, function ($q) use ($query) {
+                return $q->where('name', 'LIKE', "%{$query}%")
+                         ->orWhere('email', 'LIKE', "%{$query}%");
+            })
+            ->paginate(10);
+            
         return view('users.index', compact('users'));
     }
 

@@ -10,9 +10,18 @@ use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
-    public function catalog()
+    public function catalog(Request $request)
     {
-        $products = Product::where('stock', '>', 0)->with('category', 'supplier')->latest()->paginate(12);
+        $query = $request->get('q');
+        $products = Product::where('stock', '>', 0)
+            ->when($query, function ($q) use ($query) {
+                return $q->where('name', 'LIKE', "%{$query}%")
+                         ->orWhere('description', 'LIKE', "%{$query}%");
+            })
+            ->with('category', 'supplier')
+            ->latest()
+            ->paginate(12);
+            
         return view('purchases.catalog', compact('products'));
     }
 

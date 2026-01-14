@@ -9,9 +9,17 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with(['category', 'supplier'])->latest()->get();
+        $query = $request->get('q');
+        $products = Product::with(['category', 'supplier'])
+            ->when($query, function ($q) use ($query) {
+                return $q->where('name', 'LIKE', "%{$query}%")
+                         ->orWhere('description', 'LIKE', "%{$query}%");
+            })
+            ->latest()
+            ->get();
+            
         return view('products.index', compact('products'));
     }
 

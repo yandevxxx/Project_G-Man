@@ -6,6 +6,21 @@
             <h2 class="h3 mb-1 fw-bold">User Management</h2>
             <p class="text-muted small mb-0">Manage user accounts and permissions.</p>
         </div>
+        <div class="d-flex align-items-center gap-3">
+            <form action="{{ route('users.index') }}" method="GET" class="d-flex align-items-center">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted opacity-50 small"></i></span>
+                    <input type="text" name="q" class="form-control bg-light border-0 ps-2 rounded-end-pill shadow-none"
+                        style="width: 250px; font-size: 0.85rem;" placeholder="Search users..." 
+                        value="{{ request('q') }}">
+                    @if(request('q'))
+                        <a href="{{ route('users.index') }}" class="btn btn-light border-0 small ms-1 rounded-circle">
+                            <i class="fas fa-times text-muted"></i>
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
     </div>
 
     @if (session('success'))

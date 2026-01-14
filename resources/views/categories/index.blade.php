@@ -6,9 +6,24 @@
             <h2 class="h3 mb-1 fw-bold">Categories</h2>
             <p class="text-muted small mb-0">Manage product categories for your inventory.</p>
         </div>
-        <a href="{{ route('categories.create') }}" class="btn btn-premium">
-            <i class="fas fa-plus me-2"></i> Add Category
-        </a>
+        <div class="d-flex align-items-center gap-3">
+            <form action="{{ route('categories.index') }}" method="GET" class="d-flex align-items-center">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted opacity-50 small"></i></span>
+                    <input type="text" name="q" class="form-control bg-light border-0 ps-2 rounded-end-pill shadow-none"
+                        style="width: 250px; font-size: 0.85rem;" placeholder="Search categories..." 
+                        value="{{ request('q') }}">
+                    @if(request('q'))
+                        <a href="{{ route('categories.index') }}" class="btn btn-light border-0 small ms-1 rounded-circle">
+                            <i class="fas fa-times text-muted"></i>
+                        </a>
+                    @endif
+                </div>
+            </form>
+            <a href="{{ route('categories.create') }}" class="btn btn-premium">
+                <i class="fas fa-plus me-2"></i> Add Category
+            </a>
+        </div>
     </div>
 
     @if (session('success'))
