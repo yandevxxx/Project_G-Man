@@ -41,18 +41,22 @@ class PurchaseController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
+            'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $product_id = $request->product_id;
         $quantity = $request->quantity;
 
-        DB::beginTransaction();
-
         try {
-            $product = Product::lockForUpdate()->find($product_id);
+            $product = Product::findOrFail($product_id);
 
-            if (!$product || $product->stock < $quantity) {
-                throw new \Exception("Product {$product->name} is out of stock or insufficient quantity!");
+            if ($product->stock < $quantity) {
+                return redirect()->back()->with('error', 'Insufficient stock for ' . $product->name);
+            }
+
+            $paymentProofPath = null;
+            if ($request->hasFile('payment_proof')) {
+                $paymentProofPath = $request->file('payment_proof')->store('purchases', 'public');
             }
 
             $total = $product->price * $quantity;
@@ -63,18 +67,61 @@ class PurchaseController extends Controller
                 'quantity' => $quantity,
                 'price' => $product->price,
                 'total_amount' => $total,
-                'status' => 'completed',
+                'status' => 'pending',
+                'payment_proof' => $paymentProofPath,
             ]);
 
-            $product->stock -= $quantity;
+            return redirect()->route('purchases.history')->with('success', 'Purchase request submitted! Your payment proof is under review.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Checkout failed: ' . $e->getMessage());
+        }
+    }
+
+    public function approve($id)
+    {
+        DB::beginTransaction();
+        try {
+            $purchase = Purchase::findOrFail($id);
+            
+            if ($purchase->status !== 'pending') {
+                return redirect()->back()->with('error', 'Only pending transactions can be approved.');
+            }
+
+            $product = Product::lockForUpdate()->findOrFail($purchase->product_id);
+
+            if ($product->stock < $purchase->quantity) {
+                throw new \Exception("Stock is no longer sufficient for this order.");
+            }
+
+            $product->stock -= $purchase->quantity;
             $product->save();
 
-            DB::commit();
+            $purchase->status = 'accepted';
+            $purchase->save();
 
-            return redirect()->route('purchases.history')->with('success', 'Purchase completed successfully!');
+            DB::commit();
+            return redirect()->back()->with('success', 'Transaction approved and stock updated!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Checkout failed: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Approval failed: ' . $e->getMessage());
+        }
+    }
+
+    public function reject($id)
+    {
+        try {
+            $purchase = Purchase::findOrFail($id);
+            
+            if ($purchase->status !== 'pending') {
+                return redirect()->back()->with('error', 'Only pending transactions can be rejected.');
+            }
+
+            $purchase->status = 'rejected';
+            $purchase->save();
+
+            return redirect()->back()->with('success', 'Transaction rejected.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Rejection failed: ' . $e->getMessage());
         }
     }
 

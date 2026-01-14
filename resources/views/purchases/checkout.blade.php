@@ -32,7 +32,15 @@
                             <p class="text-muted small mb-0">{{ $product->category->name }}</p>
                         </div>
 
-                        <form action="{{ route('purchases.process_checkout') }}" method="POST">
+                        <div class="alert alert-info border-0 shadow-sm rounded-4 mb-4 small">
+                            <h6 class="fw-800 mb-1"><i class="fas fa-university me-2"></i> Payment Instructions</h6>
+                            <p class="mb-0">Please transfer the total amount to: <br>
+                               <strong>Bank Antigravity: 123-456-7890 (G-MAN Store)</strong><br>
+                               Upload your transfer receipt below to proceed.
+                            </p>
+                        </div>
+
+                        <form action="{{ route('purchases.process_checkout') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
 
@@ -52,6 +60,16 @@
                                 </div>
                             </div>
 
+                            <div class="mb-4">
+                                <label for="payment_proof" class="form-label small fw-bold text-uppercase ls-wide text-muted mb-2">Payment Proof (Image)</label>
+                                <input type="file" class="form-control @error('payment_proof') is-invalid @enderror" 
+                                    id="payment_proof" name="payment_proof" accept="image/*" required>
+                                @error('payment_proof')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <div class="form-text small opacity-75">Upload receipt/screenshoot of your transfer (Max 2MB).</div>
+                            </div>
+
                             <div class="d-flex justify-content-between mb-3 py-3 border-top border-bottom">
                                 <span class="fw-bold text-muted">Price per unit</span>
                                 <span class="fw-bold text-dark">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
@@ -65,7 +83,7 @@
 
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary btn-lg py-3 rounded-4 shadow-sm fw-bold">
-                                    Confirm Purchase
+                                    Submit Request & Payment
                                 </button>
                             </div>
                         </form>

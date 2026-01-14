@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('products', ProductController::class);
         Route::resource('suppliers', SupplierController::class);
         Route::get('/admin/transactions', [App\Http\Controllers\PurchaseController::class, 'adminIndex'])->name('admin.transactions');
+        Route::post('/admin/transactions/{id}/approve', [App\Http\Controllers\PurchaseController::class, 'approve'])->name('admin.transactions.approve');
+        Route::post('/admin/transactions/{id}/reject', [App\Http\Controllers\PurchaseController::class, 'reject'])->name('admin.transactions.reject');
 
         // User Management
         Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');

@@ -13,7 +13,13 @@ class Purchase extends Model
         'price',
         'total_amount',
         'status',
+        'payment_proof',
     ];
+
+    public function getProofUrlAttribute()
+    {
+        return $this->payment_proof ? asset('storage/' . $this->payment_proof) : null;
+    }
 
     public function user()
     {

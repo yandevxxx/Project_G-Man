@@ -30,6 +30,7 @@
                             <th class="py-3 text-uppercase small fw-bold text-muted">User</th>
                             <th class="py-3 text-uppercase small fw-bold text-muted">Date</th>
                             <th class="py-3 text-uppercase small fw-bold text-muted">Product</th>
+                            <th class="py-3 text-uppercase small fw-bold text-muted">Proof</th>
                             <th class="py-3 text-uppercase small fw-bold text-muted">Total Amount</th>
                             <th class="pe-4 py-3 text-uppercase small fw-bold text-muted text-end">Status</th>
                         </tr>
@@ -67,12 +68,44 @@
                                     </div>
                                 </td>
                                 <td>
+                                    @if($purchase->payment_proof)
+                                        <a href="{{ $purchase->proof_url }}" target="_blank">
+                                            <img src="{{ $purchase->proof_url }}" alt="Proof" 
+                                                class="rounded border shadow-sm" style="width: 40px; height: 40px; object-fit: cover;">
+                                        </a>
+                                    @else
+                                        <span class="text-muted small">No Proof</span>
+                                    @endif
+                                </td>
+                                <td>
                                     <span class="fw-bold text-dark">Rp
                                         {{ number_format($purchase->total_amount, 0, ',', '.') }}</span>
                                 </td>
                                 <td class="pe-4 text-end">
-                                    <span
-                                        class="soft-badge bg-success-soft"><i class="fas fa-check-circle me-1"></i> Completed</span>
+                                    @if($purchase->status === 'pending')
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <form action="{{ route('admin.transactions.approve', $purchase->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-success rounded-pill px-3 fw-bold">
+                                                    <i class="fas fa-check me-1"></i> Approve
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('admin.transactions.reject', $purchase->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3 fw-bold">
+                                                    <i class="fas fa-times me-1"></i> Reject
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @else
+                                        @if($purchase->status === 'accepted')
+                                            <span class="soft-badge bg-success-soft"><i class="fas fa-check-circle me-1"></i> Approved</span>
+                                        @elseif($purchase->status === 'rejected')
+                                            <span class="soft-badge bg-danger-soft"><i class="fas fa-times-circle me-1"></i> Rejected</span>
+                                        @else
+                                            <span class="soft-badge bg-primary-soft"><i class="fas fa-info-circle me-1"></i> {{ ucfirst($purchase->status) }}</span>
+                                        @endif
+                                    @endif
                                 </td>
                             </tr>
                         @empty

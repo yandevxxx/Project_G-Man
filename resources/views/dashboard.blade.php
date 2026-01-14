@@ -212,9 +212,23 @@
                                             <span class="fw-bold text-dark">Rp {{ number_format($purchase->total_amount, 0, ',', '.') }}</span>
                                         </td>
                                         <td class="pe-4 text-center">
-                                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2">
-                                                <i class="fas fa-check-circle me-1"></i> Completed
-                                            </span>
+                                            @if($purchase->status === 'pending')
+                                                <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3 py-2">
+                                                    <i class="fas fa-clock me-1"></i> Pending
+                                                </span>
+                                            @elseif($purchase->status === 'accepted')
+                                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2">
+                                                    <i class="fas fa-check-circle me-1"></i> Approved
+                                                </span>
+                                            @elseif($purchase->status === 'rejected')
+                                                <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-2">
+                                                    <i class="fas fa-times-circle me-1"></i> Rejected
+                                                </span>
+                                            @else
+                                                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">
+                                                    <i class="fas fa-info-circle me-1"></i> {{ ucfirst($purchase->status) }}
+                                                </span>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

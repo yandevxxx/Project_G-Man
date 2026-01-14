@@ -26,10 +26,10 @@ class DashboardController extends Controller
 
         if (Auth::user()->role === 'admin') {
             $recent_purchases = Purchase::with(['user', 'product'])->latest()->limit(5)->get();
-            $total_revenue = Purchase::sum('total_amount');
+            $total_revenue = Purchase::where('status', 'accepted')->sum('total_amount');
         } else {
             $recent_purchases = Purchase::with(['product'])->where('user_id', Auth::id())->latest()->limit(5)->get();
-            $total_revenue = Purchase::where('user_id', Auth::id())->sum('total_amount');
+            $total_revenue = Purchase::where('user_id', Auth::id())->where('status', 'accepted')->sum('total_amount');
         }
 
         return view('dashboard', compact('stats', 'recent_purchases', 'total_revenue'));

@@ -70,7 +70,15 @@
                                         <div class="h6 fw-900 text-primary mb-0">Rp {{ number_format($purchase->total_amount, 0, ',', '.') }}</div>
                                     </div>
                                     <div class="status-indicator ms-2">
-                                        <i class="fas fa-check-circle text-success fs-5" title="Completed"></i>
+                                        @if($purchase->status === 'pending')
+                                            <i class="fas fa-clock text-warning fs-5" title="Pending Approval"></i>
+                                        @elseif($purchase->status === 'accepted')
+                                            <i class="fas fa-check-circle text-success fs-5" title="Approved"></i>
+                                        @elseif($purchase->status === 'rejected')
+                                            <i class="fas fa-times-circle text-danger fs-5" title="Rejected"></i>
+                                        @else
+                                            <i class="fas fa-info-circle text-primary fs-5" title="{{ ucfirst($purchase->status) }}"></i>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
