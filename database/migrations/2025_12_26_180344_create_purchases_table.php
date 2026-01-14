@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price', 12, 2);
             $table->decimal('total_amount', 12, 2);
+            $table->string('payment_proof')->nullable();
             $table->string('status')->default('completed');
             $table->timestamps();
         });
