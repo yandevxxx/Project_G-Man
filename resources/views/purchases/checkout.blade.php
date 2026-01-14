@@ -24,12 +24,12 @@
                     </div>
                     <div class="card-body p-4">
                         <div class="text-center mb-4">
-                            <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3 text-primary"
-                                style="width: 80px; height: 80px;">
-                                <i class="fas fa-box-open fs-1"></i>
+                            <div class="position-relative d-inline-block mb-3">
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" 
+                                    class="rounded-4 shadow-lg border-4 border-white" style="width: 160px; height: 160px; object-fit: cover;">
                             </div>
                             <h4 class="fw-bold text-dark">{{ $product->name }}</h4>
-                            <p class="text-muted small">{{ $product->category->name }}</p>
+                            <p class="text-muted small mb-0">{{ $product->category->name }}</p>
                         </div>
 
                         <form action="{{ route('purchases.process_checkout') }}" method="POST">

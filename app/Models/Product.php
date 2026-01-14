@@ -13,7 +13,16 @@ class Product extends Model
         'description',
         'price',
         'stock',
+        'image',
     ];
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+        return asset('images/placeholder-product.png');
+    }
 
     public function category()
     {

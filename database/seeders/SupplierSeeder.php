@@ -27,27 +27,6 @@ class SupplierSeeder extends Seeder
                 'email' => 'siti@berkahtextile.com',
                 'address' => 'Jl. Gatot Subroto No. 45, Bandung',
             ],
-            [
-                'name' => 'UD. Sejahtera Mandiri',
-                'contact_person' => 'Ahmad Wijaya',
-                'phone' => '+62 813 5555 6666',
-                'email' => 'ahmad@sejahtera.com',
-                'address' => 'Jl. Diponegoro No. 78, Surabaya',
-            ],
-            [
-                'name' => 'PT. Global Tech Indonesia',
-                'contact_person' => 'Dewi Lestari',
-                'phone' => '+62 856 7777 8888',
-                'email' => 'dewi@globaltech.id',
-                'address' => 'Jl. HR Rasuna Said No. 99, Jakarta Selatan',
-            ],
-            [
-                'name' => 'CV. Anugrah Furniture',
-                'contact_person' => 'Eko Prasetyo',
-                'phone' => '+62 878 1234 5678',
-                'email' => 'eko@anugrahfurniture.com',
-                'address' => 'Jl. Ahmad Yani No. 56, Semarang',
-            ],
         ];
 
         foreach ($suppliers as $supplier) {

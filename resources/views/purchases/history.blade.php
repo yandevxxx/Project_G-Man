@@ -29,63 +29,77 @@
         @endif
 
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th class="ps-4 py-3 text-uppercase small fw-bold text-muted">Order ID</th>
-                            <th class="py-3 text-uppercase small fw-bold text-muted">Date</th>
-                            <th class="py-3 text-uppercase small fw-bold text-muted">Product</th>
-                            <th class="py-3 text-uppercase small fw-bold text-muted">Total Amount</th>
-                            <th class="pe-4 py-3 text-uppercase small fw-bold text-muted text-end">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($purchases as $purchase)
-                            <tr>
-                                <td class="ps-4">
-                                    <span class="fw-bold text-dark">#{{ $purchase->id }}</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted">{{ $purchase->created_at->format('M d, Y H:i') }}</span>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="bg-light rounded text-muted d-flex align-items-center justify-content-center me-2"
-                                            style="width: 32px; height: 32px;">
-                                            <i class="fas fa-box small"></i>
-                                        </div>
-                                        <div>
-                                            <div class="text-dark fw-medium">
-                                                {{ $purchase->product->name ?? 'Unknown Product' }}</div>
-                                            <div class="small text-muted">{{ $purchase->quantity }} x Rp
-                                                {{ number_format($purchase->price, 0, ',', '.') }}</div>
-                                        </div>
+            <div class="card-body p-0">
+                @forelse($purchases as $purchase)
+                    <div class="transaction-row p-3 p-md-4 transition-all {{ !$loop->last ? 'border-bottom' : '' }}">
+                        <div class="row align-items-center">
+                            <!-- Product Image & ID -->
+                            <div class="col-auto">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="{{ $purchase->product->image_url ?? asset('images/placeholder-product.png') }}" 
+                                        alt="{{ $purchase->product->name }}" 
+                                        class="rounded-3 border shadow-sm" style="width: 52px; height: 52px; object-fit: cover;">
+                                    <div class="d-none d-sm-block">
+                                        <div class="small fw-800 text-slate-400 text-uppercase ls-wide mb-0" style="font-size: 0.65rem;">Order ID</div>
+                                        <div class="fw-700 text-slate-600" style="font-size: 0.85rem;">#{{ $purchase->id }}</div>
                                     </div>
-                                </td>
-                                <td>
-                                    <span class="fw-bold text-dark">Rp
-                                        {{ number_format($purchase->total_amount, 0, ',', '.') }}</span>
-                                </td>
-                                <td class="pe-4 text-end">
-                                    <span
-                                        class="soft-badge bg-success-soft"><i class="fas fa-check-circle me-1"></i> Completed</span>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center py-5">
-                                    <div class="empty-state-icon">
-                                        <i class="fas fa-receipt"></i>
+                                </div>
+                            </div>
+
+                            <!-- Product & Category -->
+                            <div class="col col-md-4">
+                                <h6 class="fw-800 text-slate-900 mb-0 text-truncate">{{ $purchase->product->name ?? 'Unknown Product' }}</h6>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="text-primary small fw-600">{{ $purchase->product->category->name ?? 'General' }}</span>
+                                    <span class="text-slate-300 d-none d-md-inline">•</span>
+                                    <span class="text-muted small fw-500 d-none d-md-inline">{{ $purchase->created_at->format('M d, Y') }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Quantity & Price -->
+                            <div class="col-auto col-md-2 text-md-center">
+                                <div class="small text-muted mb-0" style="font-size: 0.7rem;">Qty: {{ $purchase->quantity }}</div>
+                                <div class="small fw-700 text-slate-900">Rp {{ number_format($purchase->price, 0, ',', '.') }}</div>
+                            </div>
+
+                            <!-- Total & Status -->
+                            <div class="col col-md text-end ps-0">
+                                <div class="d-flex align-items-center justify-content-end gap-3">
+                                    <div class="text-end">
+                                        <div class="small text-muted text-uppercase fw-800 ls-wide mb-0 d-none d-md-block" style="font-size: 0.6rem;">Total Paid</div>
+                                        <div class="h6 fw-900 text-primary mb-0">Rp {{ number_format($purchase->total_amount, 0, ',', '.') }}</div>
                                     </div>
-                                    <h5 class="fw-bold text-dark mb-1">No purchase history</h5>
-                                    <p class="text-muted small mb-0">You haven't made any purchases yet.</p>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                                    <div class="status-indicator ms-2">
+                                        <i class="fas fa-check-circle text-success fs-5" title="Completed"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center py-5">
+                        <div class="empty-state-icon mb-3">
+                            <i class="fas fa-receipt opacity-10" style="font-size: 4rem;"></i>
+                        </div>
+                        <h5 class="fw-800 text-slate-900 mb-2">No Transactions Found</h5>
+                        <p class="text-muted mb-4 small">Your purchase history is currently empty.</p>
+                        <a href="{{ route('purchases.catalog') }}" class="btn btn-premium px-4 py-2 shadow-sm rounded-pill">
+                            Browse Catalog
+                        </a>
+                    </div>
+                @endforelse
             </div>
         </div>
+
+    <style>
+        .transaction-row {
+            background-color: #fff;
+            transition: all 0.2s ease;
+        }
+        .transaction-row:hover {
+            background-color: #f8fafc;
+        }
+        .ls-wide { letter-spacing: 0.025em; }
+    </style>
     </div>
 @endsection

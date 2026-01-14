@@ -20,7 +20,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-body p-4 p-md-5">
+                <div class="card-body p-4 p-md-5 pt-4">
                     <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -120,6 +120,32 @@
                         </div>
 
                         <div class="mb-4">
+                            <label for="image" class="form-label small fw-800 text-uppercase ls-wide text-muted mb-2">Product Image</label>
+                            
+                            @if($product->image)
+                                <div class="mb-3">
+                                    <div class="position-relative d-inline-block p-2 bg-light rounded-4 border border-dashed">
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" 
+                                            class="rounded-3 shadow-sm" style="width: 180px; height: 180px; object-fit: cover;">
+                                        <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary border border-white shadow-sm px-3 py-2">
+                                            Current Image
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="input-group">
+                                <span class="input-group-text px-3 border-end-0 rounded-start-4"><i class="fas fa-image opacity-50"></i></span>
+                                <input type="file" class="form-control py-3 px-4 border-start-0 rounded-end-4 @error('image') is-invalid @enderror" 
+                                    id="image" name="image" accept="image/*">
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-text small text-muted mt-1 ms-1">Recommended: Square image, max 2MB (JPEG, PNG). Leave empty to keep current.</div>
+                        </div>
+
+                        <div class="mb-5">
                             <label for="description"
                                 class="form-label small fw-bold text-uppercase ls-wide text-muted mb-2">Description <span
                                     class="text-lowercase fw-normal">(optional)</span></label>

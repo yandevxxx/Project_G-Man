@@ -50,9 +50,9 @@
                         <tr>
                             <td class="ps-4">
                                 <div class="d-flex align-items-center">
-                                    <div class="bg-light rounded-3 me-3 d-flex align-items-center justify-content-center text-muted"
-                                        style="width: 40px; height: 40px;">
-                                        <i class="fas fa-box"></i>
+                                    <div class="position-relative me-3">
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" 
+                                            class="rounded-3 shadow-sm border" style="width: 45px; height: 45px; object-fit: cover;">
                                     </div>
                                     <div>
                                         <div class="fw-bold text-dark">{{ $product->name }}</div>

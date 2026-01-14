@@ -120,6 +120,19 @@
                         </div>
 
                         <div class="mb-4">
+                            <label for="image" class="form-label small fw-800 text-uppercase ls-wide text-muted mb-2">Product Image</label>
+                            <div class="input-group">
+                                <span class="input-group-text px-3 border-end-0 rounded-start-4"><i class="fas fa-image opacity-50"></i></span>
+                                <input type="file" class="form-control py-3 px-4 border-start-0 rounded-end-4 @error('image') is-invalid @enderror" 
+                                    id="image" name="image" accept="image/*">
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-text small text-muted mt-1 ms-1">Recommended: Square image, max 2MB (JPEG, PNG).</div>
+                        </div>
+
+                        <div class="mb-4">
                             <label for="description"
                                 class="form-label small fw-bold text-uppercase ls-wide text-muted mb-2">Description <span
                                     class="text-lowercase fw-normal">(optional)</span></label>

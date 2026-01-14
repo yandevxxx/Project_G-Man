@@ -40,9 +40,15 @@
             @forelse($products as $product)
                 <div class="col-md-6 col-lg-4 col-xl-3">
                     <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden transition-all hover-translate-y">
-                        <!-- Product Image Placeholder -->
-                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                            <i class="fas fa-box-open text-muted opacity-25" style="font-size: 4rem;"></i>
+                        <!-- Product Image -->
+                        <div class="position-relative overflow-hidden" style="height: 220px;">
+                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" 
+                                class="w-100 h-100 object-fit-cover transition-all hover-zoom">
+                            @if($product->stock <= 5 && $product->stock > 0)
+                                <span class="position-absolute top-0 end-0 m-3 badge bg-danger rounded-pill shadow-sm">
+                                    Limited Stock
+                                </span>
+                            @endif
                         </div>
 
                         <div class="card-body p-4 d-flex flex-column">
@@ -114,6 +120,10 @@
 
         .transition-all {
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hover-zoom:hover {
+            transform: scale(1.1);
         }
     </style>
 @endsection
