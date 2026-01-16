@@ -7,8 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
+/**
+ * Class UserController
+ *
+ * Mengelola data pengguna (CRUD untuk admin) dan profil pengguna.
+ *
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
+    /**
+     * Menampilkan daftar semua pengguna terdaftar.
+     * Digunakan oleh Admin untuk manajemen user.
+     */
     public function index(Request $request)
     {
         $query = $request->get('q');
@@ -21,11 +32,17 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
+    /**
+     * Menampilkan form untuk mengedit data pengguna lain (Admin).
+     */
     public function edit(User $user)
     {
         return view('users.edit', compact('user'));
     }
 
+    /**
+     * Memperbarui data pengguna lain di database (Admin).
+     */
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
@@ -42,12 +59,18 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User updated successfully!');
     }
 
+    /**
+     * Menghapus pengguna dari database (Admin).
+     */
     public function destroy(User $user)
     {
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully!');
     }
 
+    /**
+     * Menampilkan halaman edit profil untuk diri sendiri.
+     */
     public function editProfile()
     {
         /** @var \App\Models\User $user */
@@ -55,6 +78,9 @@ class UserController extends Controller
         return view('profile.edit', compact('user'));
     }
 
+    /**
+     * Memperbarui data profil pengguna yang sedang login.
+     */
     public function updateProfile(Request $request)
     {
         /** @var \App\Models\User $user */

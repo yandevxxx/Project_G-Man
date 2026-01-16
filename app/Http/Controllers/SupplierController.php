@@ -5,8 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
+/**
+ * Class SupplierController
+ *
+ * Mengelola data pemasok produk (CRUD).
+ *
+ * @package App\Http\Controllers
+ */
 class SupplierController extends Controller
 {
+    /**
+     * Menampilkan daftar semua pemasok (suppliers).
+     * Dapat difilter berdasarkan nama, penanggung jawab, atau email.
+     */
     public function index(Request $request)
     {
         $query = $request->get('q');
@@ -22,11 +33,17 @@ class SupplierController extends Controller
         return view('suppliers.index', compact('suppliers'));
     }
 
+    /**
+     * Menampilkan form untuk menambahkan pemasok baru.
+     */
     public function create()
     {
         return view('suppliers.create');
     }
 
+    /**
+     * Menyimpan data pemasok baru ke database.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -42,11 +59,17 @@ class SupplierController extends Controller
         return redirect()->route('suppliers.index')->with('success', 'Supplier created successfully!');
     }
 
+    /**
+     * Menampilkan form untuk mengedit data pemasok.
+     */
     public function edit(Supplier $supplier)
     {
         return view('suppliers.edit', compact('supplier'));
     }
 
+    /**
+     * Memperbarui data pemasok di database.
+     */
     public function update(Request $request, Supplier $supplier)
     {
         $validated = $request->validate([
@@ -62,6 +85,9 @@ class SupplierController extends Controller
         return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully!');
     }
 
+    /**
+     * Menghapus data pemasok dari database.
+     */
     public function destroy(Supplier $supplier)
     {
         $supplier->delete();
