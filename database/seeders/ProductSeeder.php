@@ -7,16 +7,25 @@ use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
+/**
+ * Class ProductSeeder
+ *
+ * Seeder untuk mengisi data produk awal sebagai sampel.
+ *
+ * @package Database\Seeders
+ */
 class ProductSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Jalankan database seeds.
      */
     public function run(): void
     {
+        // Mengambil ID untuk semua kategori dan supplier agar bisa dipetakan
         $categories = Category::all()->pluck('id', 'name');
         $suppliers = Supplier::all()->pluck('id', 'name');
 
+        // Data sampel produk
         $products = [
             [
                 'name' => 'Smartphone X',
@@ -38,10 +47,11 @@ class ProductSeeder extends Seeder
             ],
         ];
 
+        // Loop melalui data produk dan simpan ke database
         foreach ($products as $item) {
             Product::create([
-                'category_id' => $categories[$item['category']] ?? $categories->first(),
-                'supplier_id' => $suppliers[$item['supplier']] ?? null,
+                'category_id' => $categories[$item['category']] ?? $categories->first(), // Ambil ID kategori berdasarkan nama
+                'supplier_id' => $suppliers[$item['supplier']] ?? null,                  // Ambil ID supplier berdasarkan nama
                 'name' => $item['name'],
                 'description' => $item['description'],
                 'price' => $item['price'],

@@ -5,13 +5,21 @@ namespace Database\Seeders;
 use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
+/**
+ * Class SupplierSeeder
+ *
+ * Seeder untuk mengisi data supplier awal.
+ *
+ * @package Database\Seeders
+ */
 class SupplierSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Jalankan database seeds.
      */
     public function run(): void
     {
+        // Data sampel supplier
         $suppliers = [
             [
                 'name' => 'PT. Maju Jaya Elektronik',
@@ -29,6 +37,7 @@ class SupplierSeeder extends Seeder
             ],
         ];
 
+        // Loop dan simpan setiap supplier ke database
         foreach ($suppliers as $supplier) {
             Supplier::create($supplier);
         }
