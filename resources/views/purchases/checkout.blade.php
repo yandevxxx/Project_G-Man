@@ -33,14 +33,6 @@
                             <p class="text-muted small mb-0">{{ $product->category->name }}</p>
                         </div>
 
-                        <div class="alert alert-info border-0 shadow-sm rounded-4 mb-4 small">
-                            <h6 class="fw-800 mb-1"><i class="fas fa-university me-2"></i> Payment Instructions</h6>
-                            <p class="mb-0">Please transfer the total amount to: <br>
-                                <strong>Bank: 123-456-7890 (G-MAN Store)</strong><br>
-                                Upload your transfer receipt below to proceed.
-                            </p>
-                        </div>
-
                         <form action="{{ route('purchases.process_checkout') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
@@ -59,6 +51,45 @@
                                         onclick="updateQuantity(1)"><i class="fas fa-plus"></i></button>
                                 </div>
                                 <div class="form-text text-muted text-center mt-2">Available Stock: {{ $product->stock }}
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="payment_type"
+                                    class="form-label small fw-bold text-uppercase ls-wide text-muted mb-2">Payment Type</label>
+                                <select class="form-select @error('payment_type') is-invalid @enderror" id="payment_type" name="payment_type" required onchange="handlePaymentChange(this.value)">
+                                    <option value="" selected disabled>Select Payment Method</option>
+                                    <option value="QRIS">QRIS (Scan barcode)</option>
+                                    <option value="Mandiri">Bank Mandiri</option>
+                                    <option value="BRI">Bank BRI</option>
+                                </select>
+                                @error('payment_type')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div id="payment-instructions" class="alert alert-info border-0 shadow-sm rounded-4 mb-4 small d-none">
+                                <h6 class="fw-800 mb-2"><i class="fas fa-info-circle me-2"></i> Payment Instructions</h6>
+                                <div id="qris-info" class="text-center d-none">
+                                    <p class="mb-2 fw-bold text-primary">Scan QRIS to pay:</p>
+                                    <img src="{{ asset('images/qris-dummy.png') }}" class="img-fluid rounded-3 shadow-sm border mb-2" style="max-width: 200px;">
+                                </div>
+                                <div id="bank-info" class="d-none">
+                                    <p class="mb-0">Please transfer your payment to:</p>
+                                    <div class="bg-white p-2 rounded-3 border border-info mt-2">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="text-muted">Bank Name:</span>
+                                            <span class="fw-bold" id="bank-name-display">-</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="text-muted">Account No:</span>
+                                            <span class="fw-bold text-primary">123-456-7890</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-muted">Beneficiary:</span>
+                                            <span class="fw-bold">G-MAN STORE</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -111,6 +142,26 @@
                 input.value = newVal;
                 const total = price * newVal;
                 display.innerText = 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
+            }
+        }
+
+        function handlePaymentChange(type) {
+            const instructions = document.getElementById('payment-instructions');
+            const qris = document.getElementById('qris-info');
+            const bank = document.getElementById('bank-info');
+            const bankName = document.getElementById('bank-name-display');
+
+            instructions.classList.remove('d-none');
+            
+            if (type === 'QRIS') {
+                qris.classList.remove('d-none');
+                bank.classList.add('d-none');
+            } else if (type === 'Mandiri' || type === 'BRI') {
+                qris.classList.add('d-none');
+                bank.classList.remove('d-none');
+                bankName.innerText = (type === 'Mandiri') ? 'Bank Mandiri' : 'Bank BRI';
+            } else {
+                instructions.classList.add('d-none');
             }
         }
     </script>

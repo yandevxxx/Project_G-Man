@@ -67,11 +67,13 @@ class PurchaseController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
+            'payment_type' => 'required|string|in:QRIS,Mandiri,BRI',
             'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $product_id = $request->product_id;
         $quantity = $request->quantity;
+        $payment_type = $request->payment_type;
 
         try {
             // Ambil data produk
@@ -100,6 +102,7 @@ class PurchaseController extends Controller
                 'price' => $product->price,
                 'total_amount' => $total,
                 'status' => 'pending',
+                'payment_type' => $payment_type,
                 'payment_proof' => $paymentProofPath,
             ]);
 

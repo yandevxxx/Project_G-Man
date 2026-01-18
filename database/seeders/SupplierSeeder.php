@@ -22,18 +22,39 @@ class SupplierSeeder extends Seeder
         // Data sampel supplier
         $suppliers = [
             [
-                'name' => 'PT. Maju Jaya Elektronik',
-                'contact_person' => 'Budi Santoso',
-                'phone' => '+62 812 3456 7890',
-                'email' => 'budi@majujaya.com',
-                'address' => 'Jl. Sudirman No. 123, Jakarta Pusat',
+                'name' => 'PT. Indofood Sukses Makmur',
+                'contact_person' => 'Budi Sudarsono',
+                'phone' => '+62 812 1111 2222',
+                'email' => 'budi@indofood.com',
+                'address' => 'Sudirman Plaza, Jakarta',
             ],
             [
-                'name' => 'CV. Berkah Textile',
-                'contact_person' => 'Siti Rahayu',
-                'phone' => '+62 821 9876 5432',
-                'email' => 'siti@berkahtextile.com',
-                'address' => 'Jl. Gatot Subroto No. 45, Bandung',
+                'name' => 'PT. Mayora Indah Tbk',
+                'contact_person' => 'Siti Aminah',
+                'phone' => '+62 821 3333 4444',
+                'email' => 'siti@mayora.com',
+                'address' => 'Jl. Tomang Raya, Jakarta Barat',
+            ],
+            [
+                'name' => 'Unilever Indonesia',
+                'contact_person' => 'Andi Wijaya',
+                'phone' => '+62 813 5555 6666',
+                'email' => 'andi@unilever.com',
+                'address' => 'BSD City, Tangerang',
+            ],
+            [
+                'name' => 'PT. Matahari Department Store',
+                'contact_person' => 'Rina Melati',
+                'phone' => '+62 856 7777 8888',
+                'email' => 'rina@matahari.com',
+                'address' => 'Lippo Village, Tangerang',
+            ],
+            [
+                'name' => 'PT. Erajaya Swasembada',
+                'contact_person' => 'Joko Susilo',
+                'phone' => '+62 811 9999 0000',
+                'email' => 'joko@erajaya.com',
+                'address' => 'Jl. Bandengan Selatan, Jakarta',
             ],
         ];
 

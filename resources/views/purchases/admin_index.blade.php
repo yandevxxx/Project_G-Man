@@ -30,6 +30,7 @@
                             <th class="py-3 text-uppercase small fw-bold text-muted">User</th>
                             <th class="py-3 text-uppercase small fw-bold text-muted">Date</th>
                             <th class="py-3 text-uppercase small fw-bold text-muted">Product</th>
+                            <th class="py-3 text-uppercase small fw-bold text-muted">Method</th>
                             <th class="py-3 text-uppercase small fw-bold text-muted">Proof</th>
                             <th class="py-3 text-uppercase small fw-bold text-muted">Total Amount</th>
                             <th class="pe-4 py-3 text-uppercase small fw-bold text-muted text-end">Status</th>
@@ -66,6 +67,9 @@
                                                 {{ $purchase->quantity }}</div>
                                         </div>
                                     </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border fw-500 small">{{ $purchase->payment_type ?? 'N/A' }}</span>
                                 </td>
                                 <td>
                                     @if($purchase->payment_proof)

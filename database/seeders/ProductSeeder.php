@@ -28,22 +28,49 @@ class ProductSeeder extends Seeder
         // Data sampel produk
         $products = [
             [
-                'name' => 'Smartphone X',
-                'category' => 'Electronics',
-                'supplier' => 'PT. Maju Jaya Elektronik',
-                'price' => 7990000,
-                'stock' => 50,
-                'description' => 'Latest model smartphone with high-res camera.',
-                'image' => 'products/smartphone-x.png'
+                'name' => 'Indomie Goreng Original',
+                'category' => 'Makanan',
+                'supplier' => 'PT. Indofood Sukses Makmur',
+                'price' => 3500,
+                'stock' => 500,
+                'description' => 'Mi instan goreng rasa original yang melegenda.',
+                'image' => 'products/indomie.png'
             ],
             [
-                'name' => 'Classic T-Shirt',
-                'category' => 'Clothing',
-                'supplier' => 'CV. Berkah Textile',
-                'price' => 150000,
+                'name' => 'Teh Botol Sosro 450ml',
+                'category' => 'Minuman',
+                'supplier' => 'PT. Mayora Indah Tbk',
+                'price' => 6000,
+                'stock' => 200,
+                'description' => 'Minuman teh melati dalam kemasan botol plastik.',
+                'image' => 'products/tehbotol.png'
+            ],
+            [
+                'name' => 'Kaos Polos Cotton Combed 30s',
+                'category' => 'Pakaian',
+                'supplier' => 'PT. Matahari Department Store',
+                'price' => 55000,
                 'stock' => 100,
-                'description' => 'Comfortable cotton t-shirt.',
-                'image' => 'products/classic-tshirt.png'
+                'description' => 'Kaos polos premium bahan lembut dan adem.',
+                'image' => 'products/kaos.png'
+            ],
+            [
+                'name' => 'Kopi Kapal Api 165g',
+                'category' => 'Makanan',
+                'supplier' => 'PT. Mayora Indah Tbk',
+                'price' => 15000,
+                'stock' => 150,
+                'description' => 'Kopi bubuk hitam mantap dengan aroma khas.',
+                'image' => 'products/kopi.png'
+            ],
+            [
+                'name' => 'Smartphone Galaxy A54',
+                'category' => 'Elektronik',
+                'supplier' => 'PT. Erajaya Swasembada',
+                'price' => 5999000,
+                'stock' => 25,
+                'description' => 'Smartphone 5G dengan kamera mantap dan layar jernih.',
+                'image' => 'products/samsung.png'
             ],
         ];
 

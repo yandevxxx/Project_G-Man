@@ -21,12 +21,11 @@ class CategorySeeder extends Seeder
     {
         // Daftar kategori produk yang akan ditambahkan
         $categories = [
-            'Electronics',
-            'Clothing',
             'Makanan',
             'Minuman',
-            'Parabotan',
-            'Sepatu'
+            'Pakaian',
+            'Elektronik',
+            'Kesehatan'
         ];
 
         // Loop melalui setiap item dan simpan ke database

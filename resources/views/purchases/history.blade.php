@@ -60,6 +60,7 @@
                             <div class="col-auto col-md-2 text-md-center">
                                 <div class="small text-muted mb-0" style="font-size: 0.7rem;">Qty: {{ $purchase->quantity }}</div>
                                 <div class="small fw-700 text-slate-900">Rp {{ number_format($purchase->price, 0, ',', '.') }}</div>
+                                <div class="badge bg-light text-dark border mt-1 fw-500" style="font-size: 0.65rem;">{{ $purchase->payment_type ?? 'N/A' }}</div>
                             </div>
 
                             <!-- Total & Status -->
