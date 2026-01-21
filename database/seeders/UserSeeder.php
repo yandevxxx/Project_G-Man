@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
     {
         // Membuat akun Admin
         User::create([
-            'name' => 'Alexander G. Man',
+            'name' => 'Admin System',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'admin',
@@ -32,48 +32,14 @@ class UserSeeder extends Seeder
             'alamat' => 'Sudirman Central Business District, Tower 1, Jakarta',
         ]);
 
-        // Membuat akun User biasa 1
         User::create([
-            'name' => 'Sarah Jean',
+            'name' => 'User System',
             'email' => 'user@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'user',
-            'jenis_kelamin' => 'Perempuan',
-            'pekerjaan' => 'Logistics Coordinator',
-            'alamat' => 'Pakuwon City Commercial Area, Block B2, Surabaya',
-        ]);
-
-        // Membuat akun User biasa 2
-        User::create([
-            'name' => 'Michael Santoso',
-            'email' => 'michael@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 'user',
             'jenis_kelamin' => 'Laki-laki',
-            'pekerjaan' => 'Software Engineer',
-            'alamat' => 'Jl. Kebon Jeruk No. 88, Jakarta Barat',
-        ]);
-
-        // Membuat akun User biasa 3
-        User::create([
-            'name' => 'Dewi Lestari',
-            'email' => 'dewi@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 'user',
-            'jenis_kelamin' => 'Perempuan',
-            'pekerjaan' => 'Marketing Specialist',
-            'alamat' => 'Jl. Diponegoro No. 10, Semarang',
-        ]);
-
-        // Membuat akun User biasa 4
-        User::create([
-            'name' => 'Bambang Pamungkas',
-            'email' => 'bambang@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 'user',
-            'jenis_kelamin' => 'Laki-laki',
-            'pekerjaan' => 'Production Manager',
-            'alamat' => 'Jl. Slamet Riyadi No. 5, Solo',
+            'pekerjaan' => 'Chief Operations Officer',
+            'alamat' => 'Sudirman Central Business District, Tower 1, Jakarta',
         ]);
     }
 }

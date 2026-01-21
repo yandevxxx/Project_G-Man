@@ -50,8 +50,9 @@ class ProductController extends Controller
         $categories = Category::all();
         $suppliers = Supplier::all();
 
-        // Mengembalikan view create produk
-        return view('products.create', compact('categories', suppliers));
+        // Mengembalikan view create produk dengan membawa data kategori dan supplier
+        return view('products.create', compact('categories', 'suppliers'));
+
     }
 
     /**

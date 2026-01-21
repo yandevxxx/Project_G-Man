@@ -124,76 +124,54 @@ class AuthController extends Controller
     }
 
     /**
-     * Memverifikasi kredensial untuk reset password.
+     * Memverifikasi email untuk reset password dan langsung tampilkan form reset.
      */
     public function verifyResetCredentials(Request $request)
     {
-        // Validasi input email dan password lama (atau password verifikasi)
+        // Validasi input email saja
         $request->validate([
             'email' => ['required', 'email', 'exists:users,email'],
-            'password' => ['required'],
         ]);
 
         // Mencari user berdasarkan email
         $user = User::where('email', $request->email)->first();
 
-        // Memeriksa apakah password yang dimasukkan cocok dengan password user
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'The provided password does not match our records.'])->withInput();
+        // Jika user tidak ditemukan
+        if (!$user) {
+            return back()->withErrors(['email' => 'We could not find a user with that email address.'])->withInput();
         }
 
-        // Jika verifikasi identitas berhasil, buat token reset sementara
-        $token = Str::random(64);
-        session([
-            'reset_verified_email' => $request->email,
-            'reset_verified_token' => $token
-        ]);
+        // Simpan email di session untuk proses reset
+        session(['reset_email' => $request->email]);
 
-        // Redirect ke halaman form reset password baru
-        return redirect()->route('password.reset', ['token' => $token]);
-    }
-
-
-    /**
-     * Menampilkan halaman reset password dengan token.
-     */
-    public function resetPassword(Request $request, $token)
-    {
-        // Memastikan token di session cocok dengan token di URL
-        if (session('reset_verified_token') !== $token) {
-            return redirect()->route('password.request')->withErrors(['email' => 'Please verify your identity first.']);
-        }
-
-        // Mengembalikan view reset-password dengan data email dan token
+        // Langsung tampilkan form reset password
         return view('auth.reset-password', [
-            'token' => $token,
-            'email' => session('reset_verified_email')
+            'email' => $request->email
         ]);
     }
 
     /**
-     * Memperbarui password pengguna setelah verifikasi reset.
+     * Memperbarui password pengguna.
      */
     public function updatePassword(Request $request)
     {
-        // Validasi input token, email, dan password baru
+        // Validasi input email dan password baru
         $request->validate([
-            'token' => 'required',
             'email' => 'required|email|exists:users,email',
             'password' => 'required|min:8|confirmed',
         ]);
 
-        // Memastikan session verifikasi masih valid
-        if (session('reset_verified_token') !== $request->token || session('reset_verified_email') !== $request->email) {
-            return redirect()->route('password.request')->withErrors(['email' => 'Session expired or invalid. Please verify again.']);
+        // Memastikan email di session cocok dengan email yang dikirim
+        if (session('reset_email') !== $request->email) {
+            return redirect()->route('password.request')->withErrors(['email' => 'Session expired. Please try again.']);
         }
 
         // Update password user di database
         $user = User::where('email', $request->email)->first();
         $user->update(['password' => Hash::make($request->password)]);
 
-        // Menghapus data verifikasi dari session setelah selesai
-        session()->forget(['reset_verified_email', 'reset_verified_token']);
+        // Menghapus data dari session setelah selesai
+        session()->forget('reset_email');
 
         // Redirect ke halaman login dengan pesan sukses
         return redirect()->route('login')->with('success', 'Password has been reset successfully!');

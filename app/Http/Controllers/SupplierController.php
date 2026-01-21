@@ -20,16 +20,21 @@ class SupplierController extends Controller
      */
     public function index(Request $request)
     {
+        // Mengambil kata kunci pencarian dari parameter query 'q'
         $query = $request->get('q');
+
+        // Mengambil data supplier beserta jumlah produk yang terkait
         $suppliers = Supplier::withCount('products')
             ->when($query, function ($q) use ($query) {
+                // Filter pencarian berdasarkan nama, orang yang bisa dihubungi, atau email
                 return $q->where('name', 'LIKE', "%{$query}%")
                          ->orWhere('contact_person', 'LIKE', "%{$query}%")
                          ->orWhere('email', 'LIKE', "%{$query}%");
             })
-            ->latest()
+            ->latest() // Mengurutkan berdasarkan data terbaru yang ditambahkan
             ->get();
             
+        // Mengembalikan view index supplier dengan membawa data hasil query
         return view('suppliers.index', compact('suppliers'));
     }
 
@@ -46,6 +51,7 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        // Melakukan validasi data yang dikirim melalui form tambah supplier
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'contact_person' => 'nullable|string|max:255',
@@ -54,8 +60,10 @@ class SupplierController extends Controller
             'address' => 'nullable|string',
         ]);
 
+        // Menyimpan data yang telah divalidasi ke dalam tabel suppliers
         Supplier::create($validated);
 
+        // Mengalihkan kembali ke halaman daftar supplier dengan pesan sukses
         return redirect()->route('suppliers.index')->with('success', 'Supplier created successfully!');
     }
 
@@ -72,6 +80,7 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
+        // Melakukan validasi data yang dikirim melalui form edit supplier
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'contact_person' => 'nullable|string|max:255',
@@ -80,8 +89,10 @@ class SupplierController extends Controller
             'address' => 'nullable|string',
         ]);
 
+        // Memperbarui record supplier yang dipilih dengan data baru
         $supplier->update($validated);
 
+        // Mengalihkan kembali ke halaman daftar supplier dengan pesan sukses
         return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully!');
     }
 
@@ -90,8 +101,10 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
+        // Menghapus data supplier yang dipilih dari database
         $supplier->delete();
 
+        // Mengalihkan kembali ke halaman daftar supplier dengan pesan sukses
         return redirect()->route('suppliers.index')->with('success', 'Supplier deleted successfully!');
     }
 }

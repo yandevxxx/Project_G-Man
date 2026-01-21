@@ -22,13 +22,17 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // Mengambil kata kunci pencarian dari parameter query 'q'
         $query = $request->get('q');
+
+        // Mengambil data user, filter berdasarkan nama atau email jika ada query pencarian
         $users = User::when($query, function ($q) use ($query) {
             return $q->where('name', 'LIKE', "%{$query}%")
                 ->orWhere('email', 'LIKE', "%{$query}%");
         })
-            ->paginate(10);
+            ->paginate(10); // Melakukan paginasi dengan menampilkan 10 user per halaman
 
+        // Mengembalikan view index user dengan data hasil query
         return view('users.index', compact('users'));
     }
 
@@ -45,6 +49,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // Validasi data input profil user oleh admin
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
@@ -54,8 +59,10 @@ class UserController extends Controller
             'alamat' => ['nullable', 'string'],
         ]);
 
+        // Memperbarui record user yang dipilih di database
         $user->update($validated);
 
+        // Redirect kembali ke daftar user dengan pesan sukses
         return redirect()->route('users.index')->with('success', 'User updated successfully!');
     }
 
@@ -64,7 +71,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // Menghapus record user dari database
         $user->delete();
+
+        // Redirect kembali ke daftar user dengan pesan sukses
         return redirect()->route('users.index')->with('success', 'User deleted successfully!');
     }
 
@@ -84,8 +94,10 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         /** @var \App\Models\User $user */
+        // Mengambil data user yang sedang login saat ini
         $user = Auth::user();
 
+        // Validasi data profil yang akan diperbarui
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
@@ -94,8 +106,10 @@ class UserController extends Controller
             'alamat' => ['nullable', 'string'],
         ]);
 
+        // Memperbarui data profil user tersebut di database
         $user->update($validated);
 
+        // Redirect kembali ke halaman edit profil dengan pesan sukses
         return redirect()->route('profile.edit')->with('success', 'Profile updated successfully!');
     }
 }
